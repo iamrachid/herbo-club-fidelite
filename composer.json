@@ -1,0 +1,13 @@
+{
+    "name": "rachi/herbo-club-fidelite",
+    "description": "Loyalty program plugin",
+    "require": {
+        "facebook/php-sdk-v4": "^5.1"
+    },
+    "authors": [
+        {
+            "name": "RACHID EL AISSAOUI",
+            "email": "rachid-tcs2000@outlook.fr"
+        }
+    ]
+}

@@ -170,6 +170,7 @@ class herbo_club_fidelite_admin
 			'herbo_club_fidelite_general_settings'
 		);
 		$fields = array(
+			'n_account' => "Creation d'un compte",
 			'f_like' => 'Facebook page like',
 			'c_product' => 'Commentaire sur produit',
 			'i_follow' => 'Instagram suivre',
@@ -230,6 +231,7 @@ class herbo_club_fidelite_admin
 	{
 
 		$default_options = array(
+			$this->plugin_name_snake_case . '_n_account' => 50,
 			$this->plugin_name_snake_case . '_f_like' => 50,
 			$this->plugin_name_snake_case . '_c_product' => 50,
 			$this->plugin_name_snake_case . '_i_follow' => 100,
