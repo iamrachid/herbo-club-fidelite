@@ -60,7 +60,10 @@ class Herbo_Club_Fidelite_Public
 		add_action('wp_ajax_get_points', array($this, 'get_points'));
 		add_action('comment_post', array($this, 'comment_reward'));
 		// if (class_exists('woocommerce'))
-		add_action('woocommerce_thankyou', array($this, 'order_reward'), 10, 1);
+		add_action('woocommerce_thankyou', array($this, 'order_reward'), 1, 1);
+
+		add_action('woocommerce_register_form', array($this, 'add_user_ref'), 10, 1);
+		add_action('woocommerce_created_customer', array($this, 'add_user_meta'), 10, 1);
 	}
 
 	/**
@@ -172,7 +175,7 @@ class Herbo_Club_Fidelite_Public
 		}
 		$user_id = get_current_user_id();
 		$earned = $_POST['earned'];
-		$points = get_user_meta($user_id, 'herbo-club-points', true);
+		$points = self::get_points();
 		$points[$p_action]['earned'] = true;
 		$old = $points['total_points'];
 		$new = $old + intval($earned);
@@ -187,12 +190,10 @@ class Herbo_Club_Fidelite_Public
 
 		is_user_logged_in() || wp_die();
 		$user_id = get_current_user_id();
-		$points = get_user_meta($user_id, 'herbo-club-points', true);
+		$points =  self::get_points();
 		$reward =  intval(get_option('herbo_club_fidelite_c_product'));
 		$old = $points['total_points'];
 		$new = $old + $reward;
-		error_log($new);
-		error_log($old);
 		$points = $this->sanitize_points($old, $new, $points);
 		update_user_meta($user_id, 'herbo-club-points', $points);
 	}
@@ -207,11 +208,22 @@ class Herbo_Club_Fidelite_Public
 		$spent = $order->get_total();;
 		$earned = intval($spent);
 		$user_id = $order->get_user_id();
-		$points = get_user_meta($user_id, 'herbo-club-points', true);
+		$points =  self::get_points();
 		$old = $points['total_points'];
 		$new = $old + $earned;
 		$points = $this->sanitize_points($old, $new, $points);
 		update_user_meta($user_id, 'herbo-club-points', $points);
+
+		$count = wc_get_customer_order_count($user_id);
+		$referrer = get_user_meta($user_id, 'referrer', true);
+		if (1 == $count && $referrer) {
+			$points =  self::get_points($referrer);
+			$reward =  intval(get_option('herbo_club_fidelite_referral'));
+			$old = $points['total_points'];
+			$new = $old + $reward;
+			$points = $this->sanitize_points($old, $new, $points);
+			update_user_meta($referrer, 'herbo-club-points', $points);
+		}
 	}
 
 
@@ -242,11 +254,11 @@ class Herbo_Club_Fidelite_Public
 		return $points;
 	}
 
-	public static function get_points()
+	public static function get_points($user_id = 0)
 	{
+		if ($user_id == 0)
+			$user_id = get_current_user_id();
 		$points = array();
-		is_user_logged_in() || wp_die();
-		$user_id = get_current_user_id();
 		if (empty(get_user_meta($user_id, 'herbo-club-points', true))) {
 			$points = self::get_default_points();
 			add_user_meta($user_id, 'herbo-club-points', $points, true);
@@ -286,5 +298,25 @@ class Herbo_Club_Fidelite_Public
 		$levels_max = array(1000, 5000, 10000, 15000);
 
 		return $levels_max;
+	}
+
+	public function add_user_ref()
+	{
+		if (isset($_GET['ref']) && !empty($_GET['ref']))
+			$ref = $_GET['ref'];
+		else
+			$ref = 0;
+		woocommerce_form_field('ref', array(
+			'type'	=> 'hidden',
+		), $ref);
+?>
+
+<?php
+	}
+	public function add_user_meta($customer_id)
+	{
+		if (!empty($_POST['ref'])) {
+			update_user_meta($customer_id, 'referrer', sanitize_text_field($_POST['ref']));
+		}
 	}
 }

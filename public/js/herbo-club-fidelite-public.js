@@ -169,11 +169,29 @@
     }, 10000);
   };
 
+  const referral = (button) => {
+    button.onclick = () => {
+      console.log($("#ref-copy"));
+      const link = $("#ref-copy").val();
+      navigator.clipboard.writeText(link).then(() => {
+        button.innerHTML = "Copié";
+        button.classList.add("copied");
+        button.classList.remove("copy");
+        setTimeout(() => {
+          button.innerHTML = "Activer";
+
+          button.classList.remove("copied");
+        }, 3000);
+      });
+    };
+  };
+
   // actions
   let buttons = document.querySelectorAll("[data-action]");
   buttons.forEach((button) => {
     button.onclick = () => {
       let action = button.dataset.action;
+      console.log("clicked");
       switch (action) {
         case "f_like":
           button.innerHTML = "verifier";
@@ -185,6 +203,11 @@
           break;
         case "f_share":
           f_share(button);
+          break;
+        case "referral":
+          button.innerHTML = "copier";
+          button.classList.add("copy");
+          referral(button);
           break;
       }
     };

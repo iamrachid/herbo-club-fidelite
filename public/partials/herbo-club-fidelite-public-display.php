@@ -21,61 +21,6 @@ $total_points = $points['total_points'];
 $user_id = get_current_user_id();
 get_header();
 list($current_level, $progress) = get_progress($total_points, $user_id);
-// if($current_level != $points['last_level'])
-// if ($current_level != 1) {
-//     $level = 1;
-// for($level = $points['last_level']; $level < $current_level;$level %4){
-// for ($level = 1; $level < $current_level; $level  + 1) {
-
-?>
-
-
-<!-- <div class="modal open" id="modal-one">
-        <div class="modal-bg modal-exit"></div>
-        <div class="modal-container">
-            <div class="column">
-                <div class="gift">
-                    <div class="lv-1">
-                        <div class="progress">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 34 34" class="progress-svg">
-
-
-                                <circle cx="16" cy="16" r="15.9155" class="progress-bar" />
-                                <circle cx="16" cy="16" r="15.9155" class="progress-load" />
-                            </svg>
-                            <svg class="progress-icon">
-                                <use xlink:href="sprite.svg#lv-1"></use>
-                            </svg>
-                            <div class="progress-lvl">
-                                <div class="progress-lvl__box">
-                                    <span class="progress-lvl__txt"><?= $level ?></span>
-                                    <svg class="progress-lvl__icon">
-                                        <use xlink:href="<?= plugins_url('img/sprite.svg#crown', dirname(__FILE__)) ?>"></use>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="dialog">
-                    <h3>
-                        FÉLICITATIONS ! VOUZ AVEC PASSÉ LE NIVEAU <?= $level ?>
-                    </h3>
-                    <span><?= levels_msg()[$level - 1] ?></span>
-                </div>
-                <button class="btn btn-blue modal-exit">
-                    RÉCUPÉRER LA RÉCOMPENSE
-                </button>
-            </div>
-
-            <button class="modal-close modal-exit">X</button>
-        </div>
-    </div> -->
-
-<?php
-// }
-// }
-
 
 ?>
 <div class="tabs">

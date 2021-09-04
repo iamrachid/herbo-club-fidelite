@@ -177,6 +177,7 @@ class herbo_club_fidelite_admin
 			'g_review' => 'Noter 5 * sur Google Review',
 			'f_share' => 'Partager notre site sur facebook',
 			'birthay' => 'Anniversaire',
+			'referral' => 'Parrainage'
 		);
 
 		foreach ($fields as $id => $title) {
@@ -237,7 +238,8 @@ class herbo_club_fidelite_admin
 			$this->plugin_name_snake_case . '_i_follow' => 100,
 			$this->plugin_name_snake_case . '_g_review' => 100,
 			$this->plugin_name_snake_case . '_f_share' => 100,
-			$this->plugin_name_snake_case . '_birthay' => 500
+			$this->plugin_name_snake_case . '_birthay' => 500,
+			$this->plugin_name_snake_case . '_referral' => 500
 		);
 		return $default_options[$id];
 	}

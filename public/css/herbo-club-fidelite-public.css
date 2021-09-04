@@ -296,3 +296,10 @@
   width: 8rem;
   text-align: center;
 }
+.copy {
+  background-color: #777 !important;
+}
+
+.copied {
+  background-color: #4caf50 !important;
+}

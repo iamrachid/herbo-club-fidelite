@@ -136,9 +136,30 @@ list($current_level, $progress, $remaining) = get_progress($total_points, $user_
 
         </div>
     </div>
+
     <div class="action">
         <div class="action-left">
 
+            <svg class="action-icon">
+                <use href="<?= plugins_url('img/sprite.svg#', dirname(__FILE__)) ?>connection"></use>
+            </svg>
+            <span class="action-title">Parrainage</span>
+        </div>
+        <div class="action-right">
+
+            <div class="points action-points">
+                <span class="points-value"><?= get_option('herbo_club_fidelite_referral') ?></span>
+                <svg class="coin">
+                    <use href="<?= plugins_url('img/sprite.svg#', dirname(__FILE__)) ?>coin"></use>
+                </svg>
+            </div>
+            <input type="hidden" id="ref-copy" value="<?= get_permalink(get_option('woocommerce_myaccount_page_id')) . '?ref=' . $user_id ?>">
+            <button class="action-button" data-action="referral">activer</button>
+        </div>
+    </div>
+
+    <div class="action">
+        <div class="action-left">
             <svg class="action-icon">
                 <use href="<?= plugins_url('img/sprite.svg#', dirname(__FILE__)) ?>google-plus"></use>
             </svg>
